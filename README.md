@@ -2,6 +2,8 @@
 
 A browser-based music quiz for parties, classrooms, team events, and game nights.
 
+[Play the live game](https://anupam5972.github.io/guess-the-song-in-x-seconds/) · [Open Host Controls](https://anupam5972.github.io/guess-the-song-in-x-seconds/?view=host)
+
 The app separates the game into two synchronized browser views:
 
 - **Participant Screen** is display-only and shows team scores, the round timer, game status, and revealed answers.
@@ -40,8 +42,8 @@ Open the app in two browser tabs:
 
 | View | URL | Purpose |
 | --- | --- | --- |
-| Participant | `/` | Display scores, timer, status, and revealed answers to players |
-| Host | `/?view=host` | Privately manage scores, teams, song search, and playback |
+| Participant | [Live participant screen](https://anupam5972.github.io/guess-the-song-in-x-seconds/) | Display scores, timer, status, and revealed answers to players |
+| Host | [Live host controls](https://anupam5972.github.io/guess-the-song-in-x-seconds/?view=host) | Privately manage scores, teams, song search, and playback |
 
 Both tabs must use the same browser profile and website origin so they can share game state.
 
@@ -98,7 +100,9 @@ The key is stored only in that browser's `localStorage`. It is never committed t
 ├── app.js
 ├── assets/
 │   └── guess-the-song-logo.png
+├── CHANGELOG.md
 ├── index.html
+├── LICENSE
 ├── style.css
 ├── docs/
 │   └── images/
@@ -107,6 +111,10 @@ The key is stored only in that browser's `localStorage`. It is never committed t
 ├── .gitignore
 └── README.md
 ```
+
+## Releases
+
+See [CHANGELOG.md](CHANGELOG.md) for release history and upcoming changes.
 
 ## Deployment
 
