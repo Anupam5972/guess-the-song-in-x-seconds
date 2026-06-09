@@ -47,8 +47,12 @@ function saveState(patch = {}) {
 function renderSharedState() {
   byId("teamAScore").textContent = state.scores.a;
   byId("teamBScore").textContent = state.scores.b;
-  byId("teamAName").value = state.teamNames.a;
-  byId("teamBName").value = state.teamNames.b;
+  byId("hostTeamAScore").textContent = state.scores.a;
+  byId("hostTeamBScore").textContent = state.scores.b;
+  byId("teamANameDisplay").textContent = state.teamNames.a;
+  byId("teamBNameDisplay").textContent = state.teamNames.b;
+  byId("hostTeamAName").value = state.teamNames.a;
+  byId("hostTeamBName").value = state.teamNames.b;
   byId("roundNumber").textContent = state.round;
   byId("hostRoundNumber").textContent = state.round;
   byId("participantTimer").textContent = Number(state.timer).toFixed(1);
@@ -209,8 +213,8 @@ byId("teamAPlus").addEventListener("click", () => updateScore("a", 1));
 byId("teamAMinus").addEventListener("click", () => updateScore("a", -1));
 byId("teamBPlus").addEventListener("click", () => updateScore("b", 1));
 byId("teamBMinus").addEventListener("click", () => updateScore("b", -1));
-byId("teamAName").addEventListener("change", (event) => saveState({ teamNames: { ...state.teamNames, a: event.target.value || "Team A" } }));
-byId("teamBName").addEventListener("change", (event) => saveState({ teamNames: { ...state.teamNames, b: event.target.value || "Team B" } }));
+byId("hostTeamAName").addEventListener("change", (event) => saveState({ teamNames: { ...state.teamNames, a: event.target.value || "Team A" } }));
+byId("hostTeamBName").addEventListener("change", (event) => saveState({ teamNames: { ...state.teamNames, b: event.target.value || "Team B" } }));
 byId("resetScoresButton").addEventListener("click", () => saveState({ scores: { a: 0, b: 0 } }));
 
 byId("youtubeApiKey").value = localStorage.getItem(YOUTUBE_KEY_STORAGE) || "";

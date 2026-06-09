@@ -4,8 +4,8 @@ A browser-based music quiz for parties, classrooms, team events, and game nights
 
 The app separates the game into two synchronized browser views:
 
-- **Participant Screen** displays team scores, the round timer, game status, and revealed answers.
-- **Host Controls** privately searches YouTube, plays timed song clips, advances rounds, and reveals answers.
+- **Participant Screen** is display-only and shows team scores, the round timer, game status, and revealed answers.
+- **Host Controls** manages team names and scores, privately searches YouTube, plays timed song clips, advances rounds, and reveals answers.
 
 No build step or backend is required.
 
@@ -26,8 +26,9 @@ No build step or backend is required.
 ## Features
 
 - Separate participant and host views
-- Live score updates for two teams
-- Custom team names
+- Display-only participant scoreboard with no score controls
+- Host-only score updates for two teams
+- Host-managed custom team names
 - Configurable song timer with quick presets
 - YouTube search with five playable suggestions
 - Movie and TV soundtrack filters
@@ -43,8 +44,8 @@ Open the app in two browser tabs:
 
 | View | URL | Purpose |
 | --- | --- | --- |
-| Participant | `/` | Display this tab to players and update scores here |
-| Host | `/?view=host` | Keep this tab private for searching and controlling songs |
+| Participant | `/` | Display scores, timer, status, and revealed answers to players |
+| Host | `/?view=host` | Privately manage scores, teams, song search, and playback |
 
 Both tabs must use the same browser profile and website origin so they can share game state.
 
@@ -90,7 +91,7 @@ The key is stored only in that browser's `localStorage`. It is never committed t
 4. Select one of the five YouTube results.
 5. Choose the clip length and click **Play Round**.
 6. Stop playback or wait for the timer to finish.
-7. Award points on the participant screen.
+7. Award points from the score controls in the host tab.
 8. Click **Reveal to Participants** when guesses are complete.
 9. Click **Next Round** and continue.
 
@@ -134,10 +135,10 @@ For GitHub Pages, publish the repository root and add the deployed domain to the
 
 - The YouTube API key is stored locally in the host's browser.
 - The selected answer and video player stay in the host view.
+- Team names and scores can only be changed from Host Controls.
 - Only shared game state is synchronized to the participant view.
 - API keys used in client-side apps should always have API and referrer restrictions.
 
 ## Browser Support
 
 Use a current version of Chrome, Edge, Firefox, or Safari. Cross-tab synchronization requires both views to remain on the same origin.
-

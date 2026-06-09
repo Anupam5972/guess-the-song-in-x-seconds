@@ -19,13 +19,8 @@
       <section id="participantView" class="view">
         <section class="scoreboard" aria-label="Team scores">
           <article class="team team-a">
-            <label for="teamAName">Team name</label>
-            <input id="teamAName" value="Team A" aria-label="Team A name" />
+            <span class="team-name" id="teamANameDisplay">Team A</span>
             <strong id="teamAScore">0</strong>
-            <div class="score-actions">
-              <button id="teamAMinus" type="button" aria-label="Subtract point from Team A">-</button>
-              <button id="teamAPlus" type="button" aria-label="Add point to Team A">+</button>
-            </div>
           </article>
 
           <div class="round-pill">
@@ -34,13 +29,8 @@
           </div>
 
           <article class="team team-b">
-            <label for="teamBName">Team name</label>
-            <input id="teamBName" value="Team B" aria-label="Team B name" />
+            <span class="team-name" id="teamBNameDisplay">Team B</span>
             <strong id="teamBScore">0</strong>
-            <div class="score-actions">
-              <button id="teamBMinus" type="button" aria-label="Subtract point from Team B">-</button>
-              <button id="teamBPlus" type="button" aria-label="Add point to Team B">+</button>
-            </div>
           </article>
         </section>
 
@@ -55,13 +45,41 @@
             <h2 id="publicAnswer">Hidden</h2>
           </div>
         </section>
-
-        <section class="round-tools" aria-label="Score tools">
-          <button id="resetScoresButton" type="button">Reset Scores</button>
-        </section>
       </section>
 
       <section id="hostView" class="view" hidden>
+        <section class="host-score-panel" aria-label="Host score controls">
+          <div class="host-score-heading">
+            <div>
+              <p class="eyebrow">Score controls</p>
+              <h2>Manage teams</h2>
+            </div>
+            <button id="resetScoresButton" type="button">Reset Scores</button>
+          </div>
+
+          <div class="host-score-grid">
+            <article class="host-team host-team-a">
+              <label for="hostTeamAName">Team name</label>
+              <input id="hostTeamAName" value="Team A" aria-label="Team A name" />
+              <strong id="hostTeamAScore">0</strong>
+              <div class="score-actions">
+                <button id="teamAMinus" type="button" aria-label="Subtract point from Team A">-</button>
+                <button id="teamAPlus" type="button" aria-label="Add point to Team A">+</button>
+              </div>
+            </article>
+
+            <article class="host-team host-team-b">
+              <label for="hostTeamBName">Team name</label>
+              <input id="hostTeamBName" value="Team B" aria-label="Team B name" />
+              <strong id="hostTeamBScore">0</strong>
+              <div class="score-actions">
+                <button id="teamBMinus" type="button" aria-label="Subtract point from Team B">-</button>
+                <button id="teamBPlus" type="button" aria-label="Add point to Team B">+</button>
+              </div>
+            </article>
+          </div>
+        </section>
+
         <section class="host-panel" aria-label="Host song controls">
           <div class="host-heading">
             <div>
