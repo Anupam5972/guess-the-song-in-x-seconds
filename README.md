@@ -100,6 +100,8 @@ The key is stored only in that browser's `localStorage`. It is never committed t
 ```text
 .
 ├── app.js
+├── assets/
+│   └── guess-the-song-logo.png
 ├── index.html
 ├── style.css
 ├── docs/
