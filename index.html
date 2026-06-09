@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Guess the Song</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="top-bar">
+        <div>
+          <p class="eyebrow">Guess the Song</p>
+          <h1 id="screenTitle">Participant Screen</h1>
+        </div>
+        <a id="switchViewLink" class="button-link" href="?view=host" target="_blank">Open Host Controls</a>
+      </header>
+
+      <section id="participantView" class="view">
+        <section class="scoreboard" aria-label="Team scores">
+          <article class="team team-a">
+            <label for="teamAName">Team name</label>
+            <input id="teamAName" value="Team A" aria-label="Team A name" />
+            <strong id="teamAScore">0</strong>
+            <div class="score-actions">
+              <button id="teamAMinus" type="button" aria-label="Subtract point from Team A">-</button>
+              <button id="teamAPlus" type="button" aria-label="Add point to Team A">+</button>
+            </div>
+          </article>
+
+          <div class="round-pill">
+            <span>Round</span>
+            <strong id="roundNumber">1</strong>
+          </div>
+
+          <article class="team team-b">
+            <label for="teamBName">Team name</label>
+            <input id="teamBName" value="Team B" aria-label="Team B name" />
+            <strong id="teamBScore">0</strong>
+            <div class="score-actions">
+              <button id="teamBMinus" type="button" aria-label="Subtract point from Team B">-</button>
+              <button id="teamBPlus" type="button" aria-label="Add point to Team B">+</button>
+            </div>
+          </article>
+        </section>
+
+        <section class="stage-panel" aria-live="polite">
+          <div class="timer-ring">
+            <span id="participantTimer">5.0</span>
+            <small>seconds</small>
+          </div>
+          <div class="public-answer">
+            <p id="participantStatus" class="status">Waiting for the host to start the round.</p>
+            <p class="answer-label">Answer</p>
+            <h2 id="publicAnswer">Hidden</h2>
+          </div>
+        </section>
+
+        <section class="round-tools" aria-label="Score tools">
+          <button id="resetScoresButton" type="button">Reset Scores</button>
+        </section>
+      </section>
+
+      <section id="hostView" class="view" hidden>
+        <section class="host-panel" aria-label="Host song controls">
+          <div class="host-heading">
+            <div>
+              <p class="eyebrow">Private controls</p>
+              <h2>Choose and play a song</h2>
+            </div>
+            <div class="host-round">Round <strong id="hostRoundNumber">1</strong></div>
+          </div>
+
+          <div class="controls-grid">
+            <div class="youtube-search">
+              <div class="field">
+                <label for="youtubeSearch">Search YouTube</label>
+                <input id="youtubeSearch" type="search" placeholder="Type a song, artist, movie, or TV show" />
+              </div>
+              <div class="field">
+                <label for="titleSelect">Movie / TV filter</label>
+                <select id="titleSelect" aria-label="Movie or TV series">
+                  <option value="">Any Movie / TV Series</option>
+                  <optgroup label="TV Series">
+                    <option>Breaking Bad</option>
+                    <option>Game of Thrones</option>
+                    <option>House of the Dragon</option>
+                    <option>Stranger Things</option>
+                    <option>Friends</option>
+                    <option>The Office</option>
+                    <option>Sherlock</option>
+                    <option>Dark</option>
+                    <option>Money Heist</option>
+                    <option>Narcos</option>
+                    <option>Succession</option>
+                    <option>The Crown</option>
+                    <option>Westworld</option>
+                    <option>The Mandalorian</option>
+                    <option>Peaky Blinders</option>
+                  </optgroup>
+                  <optgroup label="Movies / Franchises">
+                    <option>Harry Potter</option>
+                    <option>Star Wars</option>
+                    <option>The Lord of the Rings</option>
+                    <option>Jurassic Park</option>
+                    <option>Mission: Impossible</option>
+                    <option>James Bond</option>
+                    <option>Pirates of the Caribbean</option>
+                    <option>Avengers</option>
+                    <option>Batman</option>
+                    <option>Spider-Man</option>
+                    <option>Inception</option>
+                    <option>Interstellar</option>
+                    <option>Titanic</option>
+                    <option>The Godfather</option>
+                    <option>Rocky</option>
+                    <option>KGF</option>
+                    <option>RRR</option>
+                    <option>Baahubali</option>
+                  </optgroup>
+                </select>
+              </div>
+              <button id="searchYoutubeButton" class="primary" type="button">Show Top 5</button>
+            </div>
+
+            <details class="youtube-setup">
+              <summary>YouTube search setup</summary>
+              <div class="field">
+                <label for="youtubeApiKey">YouTube Data API key</label>
+                <input id="youtubeApiKey" type="password" autocomplete="off" placeholder="Stored only in this browser" />
+              </div>
+              <p>Required once for YouTube search. Restrict the key to YouTube Data API v3 and this website.</p>
+            </details>
+
+            <div id="youtubeResults" class="youtube-results" aria-live="polite"></div>
+
+            <div id="youtubePlayerWrap" class="youtube-player-wrap" hidden>
+              <div id="youtubePlayer"></div>
+              <p>Private host preview. This video is never shown on the participant screen.</p>
+            </div>
+
+            <div class="field">
+              <label for="secondsInput">Play length</label>
+              <div class="number-field">
+                <input id="secondsInput" type="number" min="1" max="60" step="0.5" value="5" />
+                <span>sec</span>
+              </div>
+            </div>
+
+            <div class="quick-times" aria-label="Quick play lengths">
+              <button type="button" data-seconds="3">3s</button>
+              <button type="button" data-seconds="5">5s</button>
+              <button type="button" data-seconds="8">8s</button>
+              <button type="button" data-seconds="10">10s</button>
+              <button type="button" data-seconds="15">15s</button>
+            </div>
+          </div>
+
+          <div class="host-answer">
+            <span>Answer (host only)</span>
+            <strong id="privateAnswer">No song loaded yet</strong>
+          </div>
+
+          <div class="transport">
+            <button id="startButton" class="primary" type="button">Play Round</button>
+            <button id="stopButton" type="button">Stop</button>
+            <button id="revealAnswerButton" class="reveal-button" type="button">Reveal to Participants</button>
+            <button id="nextRoundButton" type="button">Next Round</button>
+          </div>
+
+          <p id="statusText" class="status">Choose a song, enter seconds, then play.</p>
+        </section>
+
+        <section class="round-tools" aria-label="Host tools">
+          <button id="hideAnswerButton" type="button">Hide Participant Answer</button>
+          <button id="resetRoundButton" type="button">Reset Game</button>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+  </body>
+</html>
