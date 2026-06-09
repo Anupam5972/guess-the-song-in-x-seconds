@@ -13,15 +13,11 @@ No build step or backend is required.
 
 ### Participant Screen
 
-![Participant screen placeholder](docs/images/participant-screen-placeholder.svg)
-
-> Replace `docs/images/participant-screen-placeholder.svg` with a screenshot when the UI is ready to showcase.
+![Guess the Song participant screen](docs/images/participant-screen.png)
 
 ### Host Controls
 
-![Host controls placeholder](docs/images/host-controls-placeholder.svg)
-
-> Replace `docs/images/host-controls-placeholder.svg` with a screenshot when the UI is ready to showcase.
+![Guess the Song host controls](docs/images/host-controls.png)
 
 ## Features
 
@@ -106,8 +102,8 @@ The key is stored only in that browser's `localStorage`. It is never committed t
 ├── style.css
 ├── docs/
 │   └── images/
-│       ├── host-controls-placeholder.svg
-│       └── participant-screen-placeholder.svg
+│       ├── host-controls.png
+│       └── participant-screen.png
 ├── .gitignore
 └── README.md
 ```
