@@ -6,8 +6,8 @@ A browser-based music quiz for parties, classrooms, team events, and game nights
 
 The app separates the game into two synchronized browser views:
 
-- **Participant Screen** is display-only and shows team scores, the round timer, game status, and revealed answers.
-- **Host Controls** manages team names and scores, privately searches YouTube, plays timed song clips, advances rounds, and reveals answers.
+- **Participant Screen** is display-only and shows team scores, an animated circular countdown, game status, and revealed answers.
+- **Host Controls** manages team names and scores, offers quick timer presets, privately searches YouTube, plays timed song clips, advances rounds, and reveals answers.
 
 No build step or backend is required.
 
@@ -25,9 +25,10 @@ No build step or backend is required.
 
 - Separate participant and host views
 - Display-only participant scoreboard with no score controls
-- Host-only score updates for two teams
+- Animated circular timer that counts down to an empty ring at `0.0`
+- Host-only score updates using direct numeric entry or `-` and `+` buttons
 - Host-managed custom team names
-- Configurable song timer with quick presets
+- Configurable song timer with 1, 3, 5, 8, 10, 12, and 15-second presets
 - YouTube search with five playable suggestions
 - Movie and TV soundtrack filters
 - Private host-only video preview and answer
@@ -42,7 +43,7 @@ Open the app in two browser tabs:
 
 | View | URL | Purpose |
 | --- | --- | --- |
-| Participant | [Live participant screen](https://anupam5972.github.io/guess-the-song-in-x-seconds/) | Display scores, timer, status, and revealed answers to players |
+| Participant | [Live participant screen](https://anupam5972.github.io/guess-the-song-in-x-seconds/) | Display scores, animated countdown, status, and revealed answers to players |
 | Host | [Live host controls](https://anupam5972.github.io/guess-the-song-in-x-seconds/?view=host) | Privately manage scores, teams, song search, and playback |
 
 Both tabs must use the same browser profile and website origin so they can share game state.
@@ -87,9 +88,9 @@ The key is stored only in that browser's `localStorage`. It is never committed t
 2. Display the participant tab on the shared screen.
 3. In Host Controls, search for a song or select a Movie/TV filter.
 4. Select one of the five YouTube results.
-5. Choose the clip length and click **Play Round**.
-6. Stop playback or wait for the timer to finish.
-7. Award points from the score controls in the host tab.
+5. Choose a preset or enter a custom clip length, then click **Play Round**.
+6. Stop playback or watch the circular timer count down to `0.0`.
+7. Award points using direct score entry or the `-` and `+` controls in the host tab.
 8. Click **Reveal to Participants** when guesses are complete.
 9. Click **Next Round** and continue.
 

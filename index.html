@@ -12,8 +12,7 @@
         <div class="brand">
           <img class="brand-logo" src="assets/guess-the-song-logo.png" alt="Guess the Song in X Seconds" />
           <div>
-            <p class="eyebrow">Game screen</p>
-          <h1 id="screenTitle">Participant Screen</h1>
+            <h1 id="screenTitle">Participant Screen</h1>
           </div>
         </div>
         <a id="switchViewLink" class="button-link" href="?view=host" target="_blank">Open Host Controls</a>
@@ -38,7 +37,7 @@
         </section>
 
         <section class="stage-panel" aria-live="polite">
-          <div class="timer-ring">
+          <div id="participantTimerRing" class="timer-ring">
             <span id="participantTimer">5.0</span>
             <small>seconds</small>
           </div>
@@ -64,7 +63,8 @@
             <article class="host-team host-team-a">
               <label for="hostTeamAName">Team name</label>
               <input id="hostTeamAName" value="Team A" aria-label="Team A name" />
-              <strong id="hostTeamAScore">0</strong>
+              <label for="hostTeamAScore">Score</label>
+              <input id="hostTeamAScore" class="score-input" type="number" min="0" step="1" value="0" aria-label="Team A score" />
               <div class="score-actions">
                 <button id="teamAMinus" type="button" aria-label="Subtract point from Team A">-</button>
                 <button id="teamAPlus" type="button" aria-label="Add point to Team A">+</button>
@@ -74,7 +74,8 @@
             <article class="host-team host-team-b">
               <label for="hostTeamBName">Team name</label>
               <input id="hostTeamBName" value="Team B" aria-label="Team B name" />
-              <strong id="hostTeamBScore">0</strong>
+              <label for="hostTeamBScore">Score</label>
+              <input id="hostTeamBScore" class="score-input" type="number" min="0" step="1" value="0" aria-label="Team B score" />
               <div class="score-actions">
                 <button id="teamBMinus" type="button" aria-label="Subtract point from Team B">-</button>
                 <button id="teamBPlus" type="button" aria-label="Add point to Team B">+</button>
@@ -169,10 +170,12 @@
             </div>
 
             <div class="quick-times" aria-label="Quick play lengths">
+              <button type="button" data-seconds="1">1s</button>
               <button type="button" data-seconds="3">3s</button>
               <button type="button" data-seconds="5">5s</button>
               <button type="button" data-seconds="8">8s</button>
               <button type="button" data-seconds="10">10s</button>
+              <button type="button" data-seconds="12">12s</button>
               <button type="button" data-seconds="15">15s</button>
             </div>
           </div>
