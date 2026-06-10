@@ -8,6 +8,7 @@ const defaultState = {
   teamNames: { a: "Team A", b: "Team B" },
   round: 1,
   timer: 5,
+  timerDuration: 5,
   publicAnswer: "",
   participantStatus: "Waiting for the host to start the round.",
 };
@@ -45,17 +46,22 @@ function saveState(patch = {}) {
 }
 
 function renderSharedState() {
+  const timer = Math.max(0, Number(state.timer) || 0);
+  const timerDuration = Math.max(timer, Number(state.timerDuration) || timer || 1);
+  const timerProgress = Math.min(100, (timer / timerDuration) * 100);
+
   byId("teamAScore").textContent = state.scores.a;
   byId("teamBScore").textContent = state.scores.b;
-  byId("hostTeamAScore").textContent = state.scores.a;
-  byId("hostTeamBScore").textContent = state.scores.b;
+  byId("hostTeamAScore").value = state.scores.a;
+  byId("hostTeamBScore").value = state.scores.b;
   byId("teamANameDisplay").textContent = state.teamNames.a;
   byId("teamBNameDisplay").textContent = state.teamNames.b;
   byId("hostTeamAName").value = state.teamNames.a;
   byId("hostTeamBName").value = state.teamNames.b;
   byId("roundNumber").textContent = state.round;
   byId("hostRoundNumber").textContent = state.round;
-  byId("participantTimer").textContent = Number(state.timer).toFixed(1);
+  byId("participantTimer").textContent = timer.toFixed(1);
+  byId("participantTimerRing").style.setProperty("--timer-progress", `${timerProgress}%`);
   byId("participantStatus").textContent = state.participantStatus;
   byId("publicAnswer").textContent = state.publicAnswer || "Hidden";
   byId("publicAnswer").classList.toggle("is-revealed", Boolean(state.publicAnswer));
@@ -84,12 +90,17 @@ function pauseCurrentSource(reset = false) {
   }
 }
 
-function stopPlayback(hostMessage = "Time is up. Song stopped.", publicMessage = "Time is up. Make your guess!") {
+function stopPlayback(
+  hostMessage = "Time is up. Song stopped.",
+  publicMessage = "Time is up. Make your guess!",
+  resetTimer = true,
+) {
   clearTimers();
   pauseCurrentSource(true);
   startButton.disabled = false;
   setHostStatus(hostMessage);
-  saveState({ timer: getSeconds(), participantStatus: publicMessage });
+  const seconds = getSeconds();
+  saveState({ timer: resetTimer ? seconds : 0, timerDuration: seconds, participantStatus: publicMessage });
 }
 
 function decodeYoutubeText(value) {
@@ -109,6 +120,7 @@ async function selectYoutubeResult(result) {
   youtubePlayer.cueVideoById(result.id.videoId);
   saveState({
     timer: getSeconds(),
+    timerDuration: getSeconds(),
     publicAnswer: "",
     participantStatus: "Song selected. Waiting for the host to play.",
   });
@@ -203,6 +215,11 @@ function updateScore(team, amount) {
   saveState({ scores: { ...state.scores, [team]: Math.max(0, state.scores[team] + amount) } });
 }
 
+function setScore(team, value) {
+  const score = Number.parseInt(value, 10);
+  saveState({ scores: { ...state.scores, [team]: Number.isFinite(score) ? Math.max(0, score) : 0 } });
+}
+
 byId("participantView").hidden = isHost;
 byId("hostView").hidden = !isHost;
 byId("screenTitle").textContent = isHost ? "Host Controls" : "Participant Screen";
@@ -213,6 +230,14 @@ byId("teamAPlus").addEventListener("click", () => updateScore("a", 1));
 byId("teamAMinus").addEventListener("click", () => updateScore("a", -1));
 byId("teamBPlus").addEventListener("click", () => updateScore("b", 1));
 byId("teamBMinus").addEventListener("click", () => updateScore("b", -1));
+byId("hostTeamAScore").addEventListener("input", (event) => {
+  if (event.target.value !== "") setScore("a", event.target.value);
+});
+byId("hostTeamBScore").addEventListener("input", (event) => {
+  if (event.target.value !== "") setScore("b", event.target.value);
+});
+byId("hostTeamAScore").addEventListener("change", (event) => setScore("a", event.target.value));
+byId("hostTeamBScore").addEventListener("change", (event) => setScore("b", event.target.value));
 byId("hostTeamAName").addEventListener("change", (event) => saveState({ teamNames: { ...state.teamNames, a: event.target.value || "Team A" } }));
 byId("hostTeamBName").addEventListener("change", (event) => saveState({ teamNames: { ...state.teamNames, b: event.target.value || "Team B" } }));
 byId("resetScoresButton").addEventListener("click", () => saveState({ scores: { a: 0, b: 0 } }));
@@ -234,12 +259,16 @@ byId("revealAnswerButton").addEventListener("click", () => {
 byId("hideAnswerButton").addEventListener("click", () => saveState({ publicAnswer: "", participantStatus: "Answer hidden." }));
 
 secondsInput.addEventListener("input", () => {
-  if (!stopTimeout) saveState({ timer: getSeconds() });
+  if (!stopTimeout) {
+    const seconds = getSeconds();
+    saveState({ timer: seconds, timerDuration: seconds });
+  }
 });
 document.querySelectorAll("[data-seconds]").forEach((button) => {
   button.addEventListener("click", () => {
     secondsInput.value = button.dataset.seconds;
-    saveState({ timer: getSeconds() });
+    const seconds = getSeconds();
+    saveState({ timer: seconds, timerDuration: seconds });
   });
 });
 
@@ -251,7 +280,7 @@ startButton.addEventListener("click", async () => {
 
   const seconds = getSeconds();
   clearTimers();
-  saveState({ timer: seconds, publicAnswer: "", participantStatus: "Listen carefully..." });
+  saveState({ timer: seconds, timerDuration: seconds, publicAnswer: "", participantStatus: "Listen carefully..." });
 
   youtubePlayer.seekTo(0, true);
   youtubePlayer.playVideo();
@@ -264,7 +293,7 @@ startButton.addEventListener("click", async () => {
     saveState({ timer: remaining });
   }, 100);
   stopTimeout = window.setTimeout(() => {
-    stopPlayback("Time is up. Take guesses, then reveal the answer.", "Time is up. Make your guess!");
+    stopPlayback("Time is up. Take guesses, then reveal the answer.", "Time is up. Make your guess!", false);
   }, seconds * 1000);
 });
 
