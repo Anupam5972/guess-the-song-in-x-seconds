@@ -8,7 +8,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
-- Add future changes here before the next release.
+- Animated circular participant countdown that shrinks as the remaining time approaches zero.
+- Direct numeric score inputs for both teams in Host Controls.
+
+### Changed
+
+- Expanded quick timer presets to 1, 3, 5, 8, 10, 12, and 15 seconds.
+- Keep the participant timer at `0.0` when an automatic countdown finishes.
+- Simplified the shared header by removing the redundant "Game screen" label.
+- Refreshed the participant and host screenshots in the project README.
 
 ## [1.0.0] - 2026-06-09
 
